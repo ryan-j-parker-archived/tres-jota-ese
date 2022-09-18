@@ -8,7 +8,7 @@
     --bright-yellow-crayola: #f6aa1c;
     --bud-green: #5FAD56;
     --viridian: #56876D;
-    --dark-sea-green: #8DB38B;1
+    --dark-sea-green: #8DB38B;
     --mindaro: #D2FF96;
     --granny-smith-apple: #B7F0AD;
     --tea-green: #C5EBC3;
@@ -53,5 +53,23 @@ main {
     padding: 140px 0;
 
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+
 }
+
+/* .text-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 2fr 1fr;
+    grid-template-areas: 'leftest leftmid middle rightmid rightest';
+}
+
+.hi {
+    font-size: 6rem;
+    color: var(--deep-space-sparkle);
+}
+
+.intro {
+    text-align: center;
+    font-size: 2rem;
+    grid-area: leftmid;
+    color: var(--electric-blue);
+} */

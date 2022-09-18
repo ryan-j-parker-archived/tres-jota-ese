@@ -1,8 +1,12 @@
 import * as THREE from 'https://unpkg.com/three@0.139.2/build/three.module.js';
 import { OrbitControls } from 'https://unpkg.com/three@0.139.2/examples/jsm/controls/OrbitControls.js';
-
+// import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js';
+import * as dat from 'https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js';
 
 // setting up the scene, camera, and renderer
+const raycaster = new THREE.Raycaster();
+console.log(raycaster);
+
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
@@ -13,7 +17,34 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.z = 30;
 
+
+const gui = new dat.GUI();
+const world = {
+    plane: {
+        width: 15,
+        height: 15,
+        widthSegments: 30,
+        heightSegments: 30,
+    },
+};
+gui.add(world.plane, 'width', 1, 30).onChange(generatePlane);
+gui.add(world.plane, 'height', 1, 30).onChange(generatePlane);
+gui.add(world.plane, 'widthSegments', 1, 60).onChange(generatePlane);
+gui.add(world.plane, 'heightSegments', 1, 60).onChange(generatePlane);
+// console.log(world.plane.width);
+function generatePlane() {
+    planeMesh.geometry.dispose();
+    planeMesh.geometry = new THREE.PlaneGeometry(
+        world.plane.width,
+        world.plane.height,
+        world.plane.widthSegments,
+        world.plane.heightSegments,
+    );
+}
+
+
 const renderer = new THREE.WebGLRenderer({
+    antialias: true,
     canvas: document.getElementById('background'),
 });
 document.body.appendChild(renderer.domElement);
@@ -22,37 +53,52 @@ document.body.appendChild(renderer.domElement);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
+renderer.toneMapping = THREE.LinearToneMapping;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 // adding light sources
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(21, 1, 10);
 scene.add(pointLight);
 
-const pointLight2 = new THREE.PointLight(0xffffff);
-pointLight.position.set(11, 1, 20);
-scene.add(pointLight2);
+// const pointLight2 = new THREE.PointLight(0xffffff);
+// pointLight.position.set(11, 1, 20);
+// scene.add(pointLight2);
 
-const pointLight3 = new THREE.PointLight(0xffffff);
-pointLight.position.set(77, 1, 30);
-scene.add(pointLight3);
+// const pointLight3 = new THREE.PointLight(0xffffff);
+// pointLight.position.set(77, 1, 30);
+// scene.add(pointLight3);
 
 const pointLight4 = new THREE.PointLight(0xffffff);
-pointLight.position.set(42, 1, 50);
+pointLight4.position.set(42, 1, 50);
 scene.add(pointLight4);
 
-const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(ambientLight);
+const skyColor = 0xB1E1FF;  // light blue
+const groundColor = 0xB97A20;  // brownish orange
+const intensity = 0.5;
+const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+scene.add(light);
+
+// const ambientLight = new THREE.AmbientLight(0xffffff);
+// scene.add(ambientLight);
 
 // adding helpers to place lights and objects
 const gridHelper = new THREE.GridHelper(200, 50);
 scene.add(gridHelper);
 
-const sphereSize = 1;
-const lightHelper = new THREE.PointLightHelper(pointLight, sphereSize);
-scene.add(lightHelper);
+// const sphereSize = 1;
+// const lightHelper = new THREE.PointLightHelper(pointLight4, sphereSize);
+// scene.add(lightHelper);
 
 // controls to move around landscape
 const controls = new OrbitControls(camera, renderer.domElement);
 renderer.render(scene, camera);
+
+controls.rotateSpeed = 0.5;
+controls.zoomSpeed = 0.9;
+
+controls.minDistance = 1;
+controls.maxDistance = 120;
 
 // add random assortment of stars to page 
 function addStar() {
@@ -82,9 +128,9 @@ const brightPaint = new THREE.TextureLoader().load('../assets/bright-paint.jpg')
 const brightWater = new THREE.TextureLoader().load('../assets/bright-water.jpg');
 const shinyBright = new THREE.TextureLoader().load('../assets/shiny-bright.jpg');
 const bwShape = new THREE.TextureLoader().load('../assets/bw-shape.jpg');
-const space = new THREE.TextureLoader().load('../assets/space.jpg');
+const space = new THREE.TextureLoader().load('../assets/space.png');
 const stoneTexture = new THREE.TextureLoader().load('../assets/stone.jpg');
-const space2 = new THREE.TextureLoader().load('../assets/space2.jpg');
+const space2 = new THREE.TextureLoader().load('../assets/space2.png');
 const stars = new THREE.TextureLoader().load('../assets/stars.jpg');
 
 // planetary bodies
@@ -145,7 +191,7 @@ scene.add(planet);
 // sphere inside torus
 const donutHole = new THREE.Mesh(
     new THREE.SphereGeometry(6, 29, 132),
-    new THREE.MeshStandardMaterial({
+    new THREE.MeshBasicMaterial({
         map: brightWater,
 
     }),
@@ -168,6 +214,64 @@ torusKnot.position.setY(-85);
 torusKnot.position.setZ(-125);
 scene.add(torusKnot);
 
+const crateTexture = new THREE.TextureLoader().load('../assets/crate-x-bar.jpg');
+const cube = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshStandardMaterial({
+        // color: 0x00ff00,
+        map: crateTexture,
+    }),
+);
+cube.position.setZ(20);
+scene.add(cube);
+
+const planeGeometry = new THREE.PlaneGeometry(15, 15, 30, 30);
+const planeMaterial = new THREE.MeshPhongMaterial({
+    side: THREE.DoubleSide,
+    flatShading: THREE.FlatShading,
+    vertexColors: true,
+    // wireframe: true,
+});
+const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+// planeGeo.position.setX(0);
+// planeGeo.position.setY(0);
+// planeGeo.position.setZ(-30);
+
+console.log();
+
+const { array } = planeMesh.geometry.attributes.position;
+
+for (let i = 0; i < array.length; i += 3) {
+    console.log(array[i]);
+    const x = array[i];
+    const y = array[i + 1];
+    const z = array[i + 2];
+
+    array[i + 2] = z + Math.random() * 2;
+}
+
+const colors = [];
+for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
+    colors.push(0.14, 0.11, 0.25);
+}
+
+console.log(colors);
+
+planeMesh.geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(colors), 3));
+
+scene.add(planeMesh);
+
+const mouse = {
+    x: undefined,
+    y: undefined,
+};
+
+addEventListener('mousemove', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    // console.log(mouse);
+});
+
 // animation function
 function animate() {
     requestAnimationFrame(animate);
@@ -175,7 +279,7 @@ function animate() {
 
     torus.rotation.x += 0.03;
     torus.rotation.y += 0.03;
-    torus.rotation.z += 0.003;
+    torus.rotation.z += 0.3;
 
     moon.rotation.x += 0.04;
     moon.rotation.y += 0.04;
@@ -197,8 +301,34 @@ function animate() {
     torusKnot.rotation.y += 0.003;
     torusKnot.rotation.z += 0.0003;
 
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.01;
+    // cube.rotation.z += 0.01;
+
+    planeMesh.rotation.z += 0.01;
+
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObject(planeMesh);
+
+    if (intersects.length > 0) {
+        const { color } = intersects[0].object.geometry.attributes;
+        color.setX(intersects[0].face.a, 0.42);
+        color.setY(intersects[0].face.a, 0.35);
+        color.setZ(intersects[0].face.a, 0.61);
+        
+        color.setX(intersects[0].face.b, 0.42);
+        color.setY(intersects[0].face.b, 0.36);
+        color.setZ(intersects[0].face.b, 0.61);
+
+        color.setX(intersects[0].face.c, 0.42);
+        color.setY(intersects[0].face.c, 0.36);
+        color.setZ(intersects[0].face.c, 0.61);
+
+        intersects[0].object.geometry.attributes.color.needsUpdate = true;
+    }
+
     controls.update();
-    console.log(scene);
+    // console.log(scene);
 }
 
 animate();
@@ -226,27 +356,3 @@ function moveCamera() {
 
 document.body.onscroll = moveCamera;
 
-const crateTexture = new THREE.TextureLoader().load('../assets/crate-x-bar.jpg');
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({
-        // color: 0x00ff00,
-        map: crateTexture,
-    }),
-);
-cube.position.setZ(25);
-scene.add(cube);
-
-
-const planeGeo = new THREE.Mesh(
-    new THREE.PlaneGeometry(5, 5, 70, 70),
-    new THREE.MeshStandardMaterial({
-        
-        wireframe: true,
-    }),
-);
-// planeGeo.position.setX(0);
-// planeGeo.position.setY(0);
-// planeGeo.position.setZ(-30);
-
-scene.add(planeGeo);
