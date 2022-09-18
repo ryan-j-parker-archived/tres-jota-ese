@@ -33,3 +33,9 @@ header .logo {
 main {
     padding: 20px;
 }
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
