@@ -1,8 +1,35 @@
 :root {
-    --background: rgb(224, 234, 247);
-    --header-background: rgb(254, 251, 245);
-    --primary-font: Corbel, 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'DejaVu Sans',
-        'Bitstream Vera Sans', 'Liberation Sans', Verdana, 'Verdana Ref', sans-serif;
+
+    /* Colors */
+    --dark-sienna: #220901;
+    --blood-red: #621708;
+    --dark-red: #941b0c;
+    --rust: #bc3908;
+    --bright-yellow-crayola: #f6aa1c;
+    --bud-green: #5FAD56;
+    --viridian: #56876D;
+    --dark-sea-green: #8DB38B;1
+    --mindaro: #D2FF96;
+    --granny-smith-apple: #B7F0AD;
+    --tea-green: #C5EBC3;
+    --deep-space-sparkle: #335C67;
+    --queen-blue: #3E6990;
+    --medium-turquoise: #4ECDC4;
+    --middle-blue: #92DCE5;
+    --electric-blue: #87F5FB;
+    --aero-blue: #BCF8EC;
+    --powder-blue: #AED9E0;
+
+    /* Fonts */
+    --disco: 'Abril Fatface';
+    --spooky: 'Averia Serif Libre';
+    --soda: 'Cherry Swash';
+    --german: 'Germania One';
+    --trek: 'Goldman';
+    --salem: 'IM Fell English';
+    --circus: 'Rye';
+    --ibm: 'IBM Plex Mono';
+
 }
 
 body {
@@ -13,34 +40,18 @@ body {
     position: absolute;
 }
 
-header {
-    position: sticky;
-    top: 0;
-    padding: 15px;
-    height: 80px;
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    background-color: var(--header-background);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
-
-header .logo {
-    height: 100%;
-}
-
 main {
-    padding: 20px;
-}
-
-canvas {
     position: fixed;
     top: 0;
     left: 0;
-}
 
-.mouse-shape {
-    cursor: crosshair;
+    width: 100vw;
+    color: white;
+    z-index: 99;
+    position: absolute;
+    margin: 0 auto;
+    padding: 140px 0;
+
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
 }
