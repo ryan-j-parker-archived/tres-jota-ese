@@ -197,7 +197,7 @@ const moon = new THREE.Mesh(
         normalMap: shinyBright,
     }),
 );
-moon.position.setX(-110);
+moon.position.setX(-140);
 moon.position.setY(90);
 moon.position.setZ(-280);
 scene.add(moon);
@@ -210,8 +210,8 @@ const spheroid = new THREE.Mesh(
         normalMap: iceTexture,
     }),
 );
-spheroid.position.setX(55);
-spheroid.position.setY(15);
+spheroid.position.setX(59);
+spheroid.position.setY(18);
 spheroid.position.setZ(-65);
 scene.add(spheroid);
 
@@ -238,7 +238,7 @@ const planet = new THREE.Mesh(
 );
 planet.position.setX(35);
 planet.position.setY(-30);
-planet.position.setZ(-95);
+planet.position.setZ(-75);
 scene.add(planet);
 
 // sphere inside torus
@@ -275,7 +275,8 @@ const cube = new THREE.Mesh(
         map: crateTexture,
     }),
 );
-cube.position.x = 5;
+cube.position.x = 6;
+cube.position.y = -4;
 cube.position.setZ(20);
 scene.add(cube);
 
@@ -286,8 +287,8 @@ const spinningBall = new THREE.Mesh(
         normalMap: shinyBright,
     }),
 );
-spinningBall.position.x = 7;
-spinningBall.position.y = 30;
+spinningBall.position.x = 12;
+spinningBall.position.y = 34;
 spinningBall.position.z = -40;
 scene.add(spinningBall);
 
