@@ -1,0 +1,30 @@
+body {
+    background: url('./assets/stars.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.parent {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 40px auto; 
+
+}
+
+.sike {
+    display: flex;
+flex-direction: row;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    object-fit: cover;
+    text-align: center;
+}
+
+.main {}

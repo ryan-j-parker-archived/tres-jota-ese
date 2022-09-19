@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import * as THREE from 'three';
 import { OrbitControls } from 'https://unpkg.com/three@0.139.2/examples/jsm/controls/OrbitControls.js';
 // import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js';
 import * as dat from 'https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js';
+import { TetrahedronGeometry } from 'three';
 // import * as dat from './node_modules/dat.gui/build/dat.gui.module.js';
 // import gsap from './node_modules/gsap/dist/gsap.min.js';
 // import gsap from 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js';
@@ -86,26 +88,26 @@ const sunlight3 = new THREE.SpotLight(0xffffff, 2);
 sunlight.position.set(-12, 42, -23);
 scene.add(sunlight3);
 
-const sphereSize = 3;
-const lightHelper = new THREE.PointLightHelper(sunlight, sphereSize);
-scene.add(lightHelper);
-const sphereSize2 = 5;
-const lightHelper2 = new THREE.PointLightHelper(sunlight2, sphereSize2);
-scene.add(lightHelper2);
-const sphereSize3 = 4;
-const lightHelper3 = new THREE.PointLightHelper(sunlight3, sphereSize3);
-scene.add(lightHelper3);
+// const sphereSize = 3;
+// const lightHelper = new THREE.PointLightHelper(sunlight, sphereSize);
+// scene.add(lightHelper);
+// const sphereSize2 = 5;
+// const lightHelper2 = new THREE.PointLightHelper(sunlight2, sphereSize2);
+// scene.add(lightHelper2);
+// const sphereSize3 = 4;
+// const lightHelper3 = new THREE.PointLightHelper(sunlight3, sphereSize3);
+// scene.add(lightHelper3);
 
 const pointLight4 = new THREE.PointLight(0xffffff);
 pointLight4.position.set(15, 15, -25);
 scene.add(pointLight4);
 
-const sphereSize4 = 2.5;
-const lightHelperQuatro = new THREE.PointLightHelper(pointLight4, sphereSize4);
-scene.add(lightHelperQuatro);
+// const sphereSize4 = 2.5;
+// const lightHelperQuatro = new THREE.PointLightHelper(pointLight4, sphereSize4);
+// scene.add(lightHelperQuatro);
 
 const sun = new THREE.Mesh(
-    new THREE.SphereGeometry(3, 13, 33),
+    new THREE.SphereGeometry(3, 60, 33),
     new THREE.MeshStandardMaterial({
         color: 0xfff275
     })
@@ -125,14 +127,14 @@ scene.add(sun);
 // scene.add(ambientLight);
 
 // adding helpers to place lights and objects
-const gridHelper = new THREE.GridHelper(200, 50);
-scene.add(gridHelper);
+// const gridHelper = new THREE.GridHelper(200, 50);
+// scene.add(gridHelper);
 
 // controls to move around landscape
 const controls = new OrbitControls(camera, renderer.domElement);
 renderer.render(scene, camera);
 
-controls.rotateSpeed = 0.5;
+controls.rotateSpeed = 0.9;
 controls.zoomSpeed = 0.9;
 
 controls.minDistance = 1;
@@ -189,7 +191,7 @@ scene.add(torus);
 
 // moon
 const moon = new THREE.Mesh(
-    new THREE.SphereGeometry(13, 43, 323),
+    new THREE.SphereGeometry(13, 60, 323),
     new THREE.MeshBasicMaterial({
         map: brightPaint,
         normalMap: shinyBright,
@@ -202,7 +204,7 @@ scene.add(moon);
 
 // spheroid
 const spheroid = new THREE.Mesh(
-    new THREE.SphereGeometry(4, 32, 128),
+    new THREE.SphereGeometry(4, 60, 128),
     new THREE.MeshStandardMaterial({
         map: goldenWaterTexture,
         normalMap: iceTexture,
@@ -213,9 +215,22 @@ spheroid.position.setY(15);
 spheroid.position.setZ(-65);
 scene.add(spheroid);
 
+const bigPlanet = new THREE.Mesh(
+    new THREE.SphereGeometry(90, 200, 200),
+    new THREE.MeshPhongMaterial({
+        map: space,
+        normalMap: iceTexture,
+    }),
+);
+
+bigPlanet.position.x = 50;
+bigPlanet.position.y = 40;
+bigPlanet.position.z = -320;
+scene.add(bigPlanet);
+
 // planet
 const planet = new THREE.Mesh(
-    new THREE.SphereGeometry(6, 28, 99),
+    new THREE.SphereGeometry(6, 60, 99),
     new THREE.MeshStandardMaterial({
         map: shinyTexture,
         normalMap: slabTexture,
@@ -228,7 +243,7 @@ scene.add(planet);
 
 // sphere inside torus
 const donutHole = new THREE.Mesh(
-    new THREE.SphereGeometry(6, 29, 132),
+    new THREE.SphereGeometry(6, 60, 132),
     new THREE.MeshBasicMaterial({
         map: brightWater,
 
@@ -241,7 +256,7 @@ scene.add(donutHole);
 
 // torus knot
 const torusKnot = new THREE.Mesh(
-    new THREE.TorusKnotGeometry(20, 5, 200, 36),
+    new THREE.TorusKnotGeometry(120, 7, 200, 60),
     new THREE.MeshBasicMaterial({
         map: goldenWaterTexture,
         normalMap: shinyBright,
@@ -260,8 +275,21 @@ const cube = new THREE.Mesh(
         map: crateTexture,
     }),
 );
+cube.position.x = 5;
 cube.position.setZ(20);
 scene.add(cube);
+
+const spinningBall = new THREE.Mesh(
+    new THREE.SphereGeometry(4, 20, 20),
+    new THREE.MeshStandardMaterial({
+        map: grassTexture,
+        normalMap: shinyBright,
+    }),
+);
+spinningBall.position.x = 7;
+spinningBall.position.y = 30;
+spinningBall.position.z = -40;
+scene.add(spinningBall);
 
 const planeGeometry = new THREE.PlaneGeometry(15, 15, 30, 30);
 const planeMaterial = new THREE.MeshPhongMaterial({
@@ -316,13 +344,17 @@ addEventListener('mousemove', (event) => {
     // console.log(mouse);
 });
 
+addEventListener('click', (event) => {
+
+});
+
 // animation function
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 
-    torus.rotation.x += 0.01;
-    torus.rotation.y += 0.1;
+    torus.rotation.x += 0.1;
+    torus.rotation.y -= 0.005;
     torus.rotation.z += 0.9;
 
     moon.rotation.x += 0.04;
@@ -353,6 +385,10 @@ function animate() {
 
     sun.rotation.y += 0.05;
     sunlight.rotation.y += 0.05;
+
+    bigPlanet.rotation.y -= 0.005;
+    bigPlanet.rotation.z += 0.00001; 
+    spinningBall.rotation.y += .91;
 
     // for (let i = 0; i < planeMesh.geometry.attributes.position.array.length; i += 3) {
     //     array[i] = planeMesh.geometry.attributes.position.array.length[i] + (Math.cos() + 0.02);
@@ -407,3 +443,25 @@ function moveCamera() {
 
 document.body.onscroll = moveCamera;
 
+const backgrounds = [
+    'grassB', 'space2B', 'stoneB', 'goldWaterB', 'iceB',
+];
+
+const grassB = { src: '../ assets / grass.jpg' };
+const space2B = '../assets/space2.png';
+const stoneB = '../assets/stone.jpg';
+const goldWaterB = '../assets/golden-water.jpg';
+const iceB = '../assets/ice-texture.jpg';
+
+// const texture = new THREE.TextureLoader().load('../assets/grass.png');
+
+// const changeIt = new THREE.EventDispatcher();
+
+torus.addEventListener('click', function (event) {
+    for (let background of backgrounds) {
+        scene.background = background;
+    }
+
+});
+
+planeMesh.position.x = 60;

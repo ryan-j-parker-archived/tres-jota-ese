@@ -75,16 +75,23 @@ main {
 } */
 
 .button {
-    width: 100px;
+    width: 130px;
 }
 
 .next {
     position: fixed;
+    padding:auto;
     bottom: 10px;
-    left: calc(50vw - 50px);
+    left: calc(50vw - 130px);
     font-size: 2rem;
     border-radius: 15px;
     background-color: black;
     color: azure;
     border: 2px solid darkgrey;
+    text-align: center;
+    margin: 5px;
+}
+
+.next:active {
+    scale: 0.98;
 }
