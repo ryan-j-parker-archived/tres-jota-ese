@@ -291,15 +291,18 @@ spinningBall.position.x = 12;
 spinningBall.position.y = 34;
 spinningBall.position.z = -40;
 scene.add(spinningBall);
-
-const planeGeometry = new THREE.PlaneGeometry(15, 15, 30, 30);
-const planeMaterial = new THREE.MeshPhongMaterial({
-    side: THREE.DoubleSide,
-    flatShading: THREE.FlatShading,
-    vertexColors: true,
-    // wireframe: true,
-});
-const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+const planeMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(45, 45, 90, 90),
+    new THREE.MeshPhongMaterial({
+        side: THREE.DoubleSide,
+        flatShading: THREE.FlatShading,
+        vertexColors: true,
+        // wireframe: true,
+    }),
+);
+// const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+planeMesh.position.x = 13;
+planeMesh.position.z = -5;
 // planeGeo.position.setX(0);
 // planeGeo.position.setY(0);
 // planeGeo.position.setZ(-30);
@@ -388,7 +391,7 @@ function animate() {
     sunlight.rotation.y += 0.05;
 
     bigPlanet.rotation.y -= 0.005;
-    bigPlanet.rotation.z += 0.00001; 
+    bigPlanet.rotation.z += 0.00001;
     spinningBall.rotation.y += .91;
 
     // for (let i = 0; i < planeMesh.geometry.attributes.position.array.length; i += 3) {
