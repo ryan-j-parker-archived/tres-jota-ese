@@ -2,8 +2,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'https://unpkg.com/three@0.139.2/examples/jsm/controls/OrbitControls.js';
 // import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js';
-import * as dat from 'https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js';
-import { TetrahedronGeometry } from 'three';
+// import * as dat from 'https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js';
+// import { TetrahedronGeometry } from 'three';
 // import * as dat from './node_modules/dat.gui/build/dat.gui.module.js';
 // import gsap from './node_modules/gsap/dist/gsap.min.js';
 // import gsap from 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js';
@@ -25,29 +25,29 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 30;
 
 
-const gui = new dat.GUI();
-const world = {
-    plane: {
-        width: 15,
-        height: 15,
-        widthSegments: 30,
-        heightSegments: 30,
-    },
-};
-gui.add(world.plane, 'width', 1, 30).onChange(generatePlane);
-gui.add(world.plane, 'height', 1, 30).onChange(generatePlane);
-gui.add(world.plane, 'widthSegments', 1, 60).onChange(generatePlane);
-gui.add(world.plane, 'heightSegments', 1, 60).onChange(generatePlane);
+// const gui = new dat.GUI();
+// const world = {
+//     plane: {
+//         width: 15,
+//         height: 15,
+//         widthSegments: 30,
+//         heightSegments: 30,
+//     },
+// };
+// gui.add(world.plane, 'width', 1, 30).onChange(generatePlane);
+// gui.add(world.plane, 'height', 1, 30).onChange(generatePlane);
+// gui.add(world.plane, 'widthSegments', 1, 60).onChange(generatePlane);
+// gui.add(world.plane, 'heightSegments', 1, 60).onChange(generatePlane);
 // console.log(world.plane.width);
-function generatePlane() {
-    planeMesh.geometry.dispose();
-    planeMesh.geometry = new THREE.PlaneGeometry(
-        world.plane.width,
-        world.plane.height,
-        world.plane.widthSegments,
-        world.plane.heightSegments,
-    );
-}
+// function generatePlane() {
+//     planeMesh.geometry.dispose();
+//     planeMesh.geometry = new THREE.PlaneGeometry(
+//         world.plane.width,
+//         world.plane.height,
+//         world.plane.widthSegments,
+//         world.plane.heightSegments,
+//     );
+// }
 
 
 const renderer = new THREE.WebGLRenderer({
@@ -458,11 +458,11 @@ const iceB = '../assets/ice-texture.jpg';
 
 // const changeIt = new THREE.EventDispatcher();
 
-torus.addEventListener('click', function (event) {
-    for (let background of backgrounds) {
-        scene.background = background;
-    }
+// torus.addEventListener('click', function (event) {
+//     for (let background of backgrounds) {
+//         scene.background = background;
+//     }
 
-});
+// });
 
 planeMesh.position.x = 60;
