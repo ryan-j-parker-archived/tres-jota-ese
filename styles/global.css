@@ -73,3 +73,18 @@ main {
     grid-area: leftmid;
     color: var(--electric-blue);
 } */
+
+.button {
+    width: 100px;
+}
+
+.next {
+    position: fixed;
+    bottom: 10px;
+    left: calc(50vw - 50px);
+    font-size: 2rem;
+    border-radius: 15px;
+    background-color: black;
+    color: azure;
+    border: 2px solid darkgrey;
+}

@@ -1,8 +1,13 @@
-import * as THREE from 'https://unpkg.com/three@0.139.2/build/three.module.js';
+import * as THREE from 'three';
 import { OrbitControls } from 'https://unpkg.com/three@0.139.2/examples/jsm/controls/OrbitControls.js';
 // import { GLTFLoader } from 'https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js';
 import * as dat from 'https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js';
-
+// import * as dat from './node_modules/dat.gui/build/dat.gui.module.js';
+// import gsap from './node_modules/gsap/dist/gsap.min.js';
+// import gsap from 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js';
+// import { gsap } from 'gsap';
+// console.log(gsap);
+// console.log(dat.GUI);
 // setting up the scene, camera, and renderer
 const raycaster = new THREE.Raycaster();
 console.log(raycaster);
@@ -69,15 +74,52 @@ scene.add(pointLight);
 // pointLight.position.set(77, 1, 30);
 // scene.add(pointLight3);
 
+const sunlight = new THREE.DirectionalLight(0xffffff, 2);
+sunlight.position.set(-7, 47, -15);
+scene.add(sunlight);
+
+const sunlight2 = new THREE.HemisphereLight(0xffffff, 2);
+sunlight.position.set(-17, 32, -15);
+scene.add(sunlight2);
+
+const sunlight3 = new THREE.SpotLight(0xffffff, 2);
+sunlight.position.set(-12, 42, -23);
+scene.add(sunlight3);
+
+const sphereSize = 3;
+const lightHelper = new THREE.PointLightHelper(sunlight, sphereSize);
+scene.add(lightHelper);
+const sphereSize2 = 5;
+const lightHelper2 = new THREE.PointLightHelper(sunlight2, sphereSize2);
+scene.add(lightHelper2);
+const sphereSize3 = 4;
+const lightHelper3 = new THREE.PointLightHelper(sunlight3, sphereSize3);
+scene.add(lightHelper3);
+
 const pointLight4 = new THREE.PointLight(0xffffff);
-pointLight4.position.set(42, 1, 50);
+pointLight4.position.set(15, 15, -25);
 scene.add(pointLight4);
 
-const skyColor = 0xB1E1FF;  // light blue
-const groundColor = 0xB97A20;  // brownish orange
-const intensity = 0.5;
-const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
-scene.add(light);
+const sphereSize4 = 2.5;
+const lightHelperQuatro = new THREE.PointLightHelper(pointLight4, sphereSize4);
+scene.add(lightHelperQuatro);
+
+const sun = new THREE.Mesh(
+    new THREE.SphereGeometry(3, 13, 33),
+    new THREE.MeshStandardMaterial({
+        color: 0xfff275
+    })
+);
+sun.position.setX(-7);
+sun.position.setY(37);
+sun.position.setZ(-25);
+scene.add(sun);
+
+// const skyColor = 0xB1E1FF;  // light blue
+// const groundColor = 0xB97A20;  // brownish orange
+// const intensity = 0.5;
+// const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+// scene.add(light);
 
 // const ambientLight = new THREE.AmbientLight(0xffffff);
 // scene.add(ambientLight);
@@ -85,10 +127,6 @@ scene.add(light);
 // adding helpers to place lights and objects
 const gridHelper = new THREE.GridHelper(200, 50);
 scene.add(gridHelper);
-
-// const sphereSize = 1;
-// const lightHelper = new THREE.PointLightHelper(pointLight4, sphereSize);
-// scene.add(lightHelper);
 
 // controls to move around landscape
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -113,7 +151,7 @@ function addStar() {
 }
 Array(400).fill().forEach(addStar);
 
-const pageTexture = new THREE.TextureLoader().load('../assets/stars.jpg');
+const pageTexture = new THREE.TextureLoader().load('../assets/space2.png');
 scene.background = pageTexture;
 
 const goldenWaterTexture = new THREE.TextureLoader().load('../assets/golden-water.jpg');
@@ -203,7 +241,7 @@ scene.add(donutHole);
 
 // torus knot
 const torusKnot = new THREE.Mesh(
-    new THREE.TorusKnotGeometry(10, 3, 100, 16),
+    new THREE.TorusKnotGeometry(20, 5, 200, 36),
     new THREE.MeshBasicMaterial({
         map: goldenWaterTexture,
         normalMap: shinyBright,
@@ -247,13 +285,19 @@ for (let i = 0; i < array.length; i += 3) {
     const y = array[i + 1];
     const z = array[i + 2];
 
+    // array[i] = x + (Math.random() - 0.05);
+    // array[i + 1] = y + (Math.random() - 0.5);
+    // array[i + 2] = z + Math.random();
+
     array[i + 2] = z + Math.random() * 2;
 }
 
 const colors = [];
 for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-    colors.push(0.14, 0.11, 0.25);
+    colors.push(0.06, 0.05, 0.09);
 }
+
+planeMesh.geometry.attributes.position.originalPosition = planeMesh.geometry.attributes.position.array;
 
 console.log(colors);
 
@@ -277,9 +321,9 @@ function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 
-    torus.rotation.x += 0.03;
-    torus.rotation.y += 0.03;
-    torus.rotation.z += 0.3;
+    torus.rotation.x += 0.01;
+    torus.rotation.y += 0.1;
+    torus.rotation.z += 0.9;
 
     moon.rotation.x += 0.04;
     moon.rotation.y += 0.04;
@@ -294,8 +338,8 @@ function animate() {
     spheroid.rotation.z -= .00009;
 
     donutHole.rotation.x += 0.0005;
-    donutHole.rotation.y -= 0.05;
-    donutHole.rotation.z += 0.0005;
+    donutHole.rotation.y -= 0.4;
+    donutHole.rotation.z += 0.05;
 
     torusKnot.rotation.x += 0.003;
     torusKnot.rotation.y += 0.003;
@@ -305,7 +349,14 @@ function animate() {
     cube.rotation.y += 0.01;
     // cube.rotation.z += 0.01;
 
-    planeMesh.rotation.z += 0.01;
+    planeMesh.rotation.z += 0.001;
+
+    sun.rotation.y += 0.05;
+    sunlight.rotation.y += 0.05;
+
+    // for (let i = 0; i < planeMesh.geometry.attributes.position.array.length; i += 3) {
+    //     array[i] = planeMesh.geometry.attributes.position.array.length[i] + (Math.cos() + 0.02);
+    // }
 
     raycaster.setFromCamera(mouse, camera);
     const intersects = raycaster.intersectObject(planeMesh);
@@ -315,7 +366,7 @@ function animate() {
         color.setX(intersects[0].face.a, 0.42);
         color.setY(intersects[0].face.a, 0.35);
         color.setZ(intersects[0].face.a, 0.61);
-        
+
         color.setX(intersects[0].face.b, 0.42);
         color.setY(intersects[0].face.b, 0.36);
         color.setZ(intersects[0].face.b, 0.61);
