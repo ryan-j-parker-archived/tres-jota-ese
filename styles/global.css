@@ -78,9 +78,9 @@ main {
     width: 130px;
 }
 
-.next {
+button {
     position: fixed;
-    padding:auto;
+    padding: auto;
     bottom: 10px;
     left: calc(50vw - 130px);
     font-size: 2rem;
@@ -92,6 +92,33 @@ main {
     margin: 5px;
 }
 
-.next:active {
+button:active {
     scale: 0.98;
 }
+
+#next {
+    margin: 15px auto;
+}
+
+#sand {
+    margin: 75px auto;
+}
+
+.text {
+    font-family: 'Tahoma';
+}
+
+.button {
+    position: fixed;
+        padding: auto;
+        bottom: 83px;
+        left: calc(50vw - 270px);
+        font-weight: 500;
+        
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#warn {
+    }
