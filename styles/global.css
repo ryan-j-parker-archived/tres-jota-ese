@@ -92,6 +92,10 @@ button {
     margin: 5px;
 }
 
+button:hover {
+    cursor: crosshair;
+}
+
 button:active {
     scale: 0.98;
 }
@@ -102,6 +106,10 @@ button:active {
 
 #sand {
     margin: 75px auto;
+}
+
+#sand:hover {
+    cursor: pointer;
 }
 
 .text {

@@ -29,14 +29,14 @@ controls.zoomSpeed = 0.99;
 controls.minDistance = 1;
 controls.maxDistance = 120;
 
-// const gridHelper = new THREE.GridHelper(100, 100, 0x00ffaa, 0xfccca1);
-// scene.add(gridHelper);
+const gridHelper = new THREE.GridHelper(100, 100, 0x00ffaa, 0xfccca1);
+scene.add(gridHelper);
 
 const genesis = new THREE.AmbientLight(0xfffbcb);
 scene.add(genesis);
 
-const pointLight = new THREE.PointLight(0xffffff, 0.6, 5);
-pointLight.position.y = 15;
+const pointLight = new THREE.PointLight(0xffffff, 2, 5);
+pointLight.position.y = 5;
 scene.add(pointLight);
 
 const pointLightHelper = new THREE.PointLightHelper(pointLight);
@@ -44,18 +44,18 @@ scene.add(pointLightHelper);
 
 
 
-const spotLight = new THREE.SpotLight(0xffffac, 2);
+const spotLight = new THREE.SpotLight(0xffffac);
 spotLight.position.set(0, 50, 0);
 // spotLight.map = new THREE.TextureLoader().load();
 
-spotLight.castShadow = true;
+// spotLight.castShadow = true;
 
-spotLight.shadow.mapSize.width = 1024;
-spotLight.shadow.mapSize.height = 1024;
+// spotLight.shadow.mapSize.width = 1024;
+// spotLight.shadow.mapSize.height = 1024;
 
-spotLight.shadow.camera.near = 200;
-spotLight.shadow.camera.far = 400;
-spotLight.shadow.camera.fov = 330;
+spotLight.shadow.camera.near = 500;
+spotLight.shadow.camera.far = 4000;
+spotLight.shadow.camera.fov = 30;
 
 scene.add(spotLight);
 
@@ -88,14 +88,12 @@ bigBall.position.y = 0;
 bigBall.position.z = 0;
 scene.add(bigBall);
 
-const stoneTexture = new THREE.TextureLoader().load('../assets/stone.jpg');
-const redBlackHex = new THREE.TextureLoader().load('../assets/red-black-hex.jpg');
-const redhex = new THREE.TextureLoader().load('../assets/redhex.jpg');
+const grass = new THREE.TextureLoader().load('../assets/grass.jpg');
 
 const floor = new THREE.Mesh(
     new THREE.CircleGeometry(50, 50, 0, Math.PI * 2),
     new THREE.MeshStandardMaterial({
-        map: redBlackHex,
+        map: grass,
         // color: 0xaaaaaa,
     }),
 );
@@ -109,50 +107,30 @@ const torus = new THREE.TorusGeometry();
 
 
 const crateTexture = new THREE.TextureLoader().load('../assets/crate-x-bar.jpg');
+
+const quince = Math.ceil(Math.random() * 15);
+const biggerNum = Math.ceil(Math.random() * 42);
+const smallerNum = Math.ceil(Math.random() * 4);
+
+const ranSpot = (Math.ceil(Math.random() * quince % smallerNum));
+
 const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.BoxGeometry(quince, quince, quince),
     new THREE.MeshStandardMaterial({
         map: crateTexture,
     }),
 );
-cube.position.x = 6;
-cube.position.y = 1;
-cube.position.setZ(20);
+cube.position.x = ranSpot;
+cube.position.y = quince - quince / 2;
+cube.position.z = -(20);
 scene.add(cube);
 
-function addBoxes() {
-    const xDistance = 40;
-    const zDistance = 30;
-    const omg = Math.floor(Math.random() * 6);
-    const multPos = Math.floor(Math.random() * 25);
-    const multNeg = Math.floor(Math.random() * -25);
-    const randomOffset = multPos + multNeg;
-    // if (randomOffset >= 25) {
-    //     adjustment = randomOffset - 10;
-    // } else if (randomOffset <= -25) {
-    //     adjustment = randomOffset + 10;
-    // } else {
-
-    // }
-    
-    const geometry = new THREE.BoxGeometry(omg, omg, omg);
-    const material = new THREE.MeshBasicMaterial({
-        map: crateTexture,
-    });
-    //initial offset so does not start in middle.
-    const xOffset = -80;
-    for (let i = 0; i < omg; i++) {
-        for (let j = 0; j < omg; j++) {
-            const mesh = new THREE.Mesh(geometry, material);
-            mesh.position.x = (xDistance * i) + xOffset;
-            mesh.position.y = omg - omg / 2;
-            mesh.position.z = (zDistance * j) + randomOffset;
-            scene.add(mesh);
-        }
-    }
-}
-
-addBoxes();
+// function spawnCrates() {
+//     new THREE.BoxGeometry(quince, quince, quince),
+//         new THREE.MeshStandardMaterial({
+//             map: crateTexture,
+//         }),
+// }
 
 function animate() {
     requestAnimationFrame(animate);
@@ -164,33 +142,29 @@ function animate() {
 animate();
 
 function addCubes() {
-    // const xDistance = 50;
-    // const zDistance = 30;
-    const omg = Math.floor(Math.random() * 6);
-    const multPos = Math.floor(Math.random() * 125);
-    const multNeg = Math.floor(Math.random() * -15);
-    const randomOffset = multPos + multNeg;
-
-    const randomNum = Math.floor(Math.random() * 125);
-
-    const geometry = new THREE.BoxGeometry(omg, omg, omg);
-    const material = new THREE.MeshBasicMaterial({
+    var xDistance = 50;
+    var zDistance = 30;
+    const omg = Math.floor(Math.random() * 14);
+    var geometry = new THREE.BoxGeometry(omg, omg, omg);
+    var material = new THREE.MeshBasicMaterial({
         map: crateTexture,
     });
     //initial offset so does not start in middle.
-    const offset = -80;
-    for (let i = 0; i < randomNum; i++) {
-        for (let j = 0; j < randomNum; j++) {
-            const mesh = new THREE.Mesh(geometry, material);
-            mesh.position.x = randomOffset * i + offset;
+    var xOffset = -80;
+    for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 3; j++) {
+            var mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = (xDistance * i) + xOffset;
             mesh.position.y = omg - omg / 2;
-            mesh.position.z = randomOffset * j + offset;
+            mesh.position.z = (zDistance * j);
             scene.add(mesh);
         }
     }
 }
 
 addCubes();
+
+
 window.addEventListener('resize', onWindowResize, false);
 
 function onWindowResize() {
