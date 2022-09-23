@@ -32,6 +32,11 @@
 
 }
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: var(--primary-font);
     background: var(--background);
@@ -106,6 +111,10 @@ button:active {
 
 #sand {
     margin: 75px auto;
+}
+
+#box {
+    margin: 20px;
 }
 
 #sand:hover {

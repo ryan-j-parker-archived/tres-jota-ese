@@ -106,7 +106,7 @@ scene.add(floor);
 const torus = new THREE.TorusGeometry();
 
 
-const crateTexture = new THREE.TextureLoader().load('../assets/crate-x-bar.jpg');
+
 
 const quince = Math.ceil(Math.random() * 15);
 const biggerNum = Math.ceil(Math.random() * 42);
@@ -114,15 +114,16 @@ const smallerNum = Math.ceil(Math.random() * 4);
 
 const ranSpot = (Math.ceil(Math.random() * quince % smallerNum));
 
+const crateTexture = new THREE.TextureLoader().load('../assets/crate-x-bar.jpg');
 const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(quince, quince, quince),
+    new THREE.BoxGeometry(1, 1, 1),
     new THREE.MeshStandardMaterial({
         map: crateTexture,
     }),
 );
-cube.position.x = ranSpot;
-cube.position.y = quince - quince / 2;
-cube.position.z = -(20);
+cube.position.x = 5;
+cube.position.y = 10;
+cube.position.z = 20;
 scene.add(cube);
 
 // function spawnCrates() {
@@ -141,28 +142,60 @@ function animate() {
 
 animate();
 
+
+function randomSign() {
+    const generator = Math.random();
+    let operand = '';
+    if (generator <= .5) {
+        operand === '-';
+    } else {
+        operand === '';
+    }
+}
+
 function addCubes() {
-    var xDistance = 50;
-    var zDistance = 30;
     const omg = Math.floor(Math.random() * 14);
-    var geometry = new THREE.BoxGeometry(omg, omg, omg);
-    var material = new THREE.MeshBasicMaterial({
+ 
+    const randomCoord = (randomSign)(Math.floor(Math.random() * 20));
+ 
+    const geometry = new THREE.BoxGeometry(omg, omg, omg);
+    const material = new THREE.MeshBasicMaterial({
         map: crateTexture,
     });
-    //initial offset so does not start in middle.
-    var xOffset = -80;
-    for (var i = 0; i < 4; i++) {
-        for (var j = 0; j < 3; j++) {
-            var mesh = new THREE.Mesh(geometry, material);
-            mesh.position.x = (xDistance * i) + xOffset;
+    const offset = -omg;
+    const xPos = Math.floor(Math.random() * 20) + offset;
+    for (let i = 0; i < 5; i++) {
+        for (let j = 0; j < 4; j++) {
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = xPos + offset;
             mesh.position.y = omg - omg / 2;
-            mesh.position.z = (zDistance * j);
+            mesh.position.z = -Math.floor(Math.random() * 30);
             scene.add(mesh);
         }
     }
 }
 
 addCubes();
+
+const cubeGenerator = function(newGroup) {
+
+    for (let i = -2; i < 3; i++) {
+        const newGeometry = new THREE.BoxGeometry(1, 1, 1);
+        const newMaterial = new THREE.MeshNormalMaterial();
+        const newCube = new THREE.Mesh(newGeometry, newMaterial);
+        newCube.position.x = i;
+        newGroup.add(newCube);
+        console.log(newCube);
+    }
+
+};
+
+const group = new THREE.Group();
+cubeGenerator(group);
+scene.add(group);
+
+
+// addCubes();
 
 
 window.addEventListener('resize', onWindowResize, false);
