@@ -43,11 +43,12 @@ controls.maxDistance = 720;
 const sunTexture = new THREE.TextureLoader().load('../assets/sun-texture.png');
 
 // const textureLoader = new THREE.TextureLoader();
+const flame = new THREE.TextureLoader().load('./assets/fire-medq.jpg');
 
 const sunSphere = new THREE.Mesh(
     new THREE.SphereGeometry(20, 120, 120),
     new THREE.MeshBasicMaterial({
-        map: sunTexture,
+        map: flame,
     }),
 );
 scene.add(sunSphere);
@@ -75,6 +76,7 @@ const starsTexture = new THREE.TextureLoader().load('../assets/few-stars.jpg');
 // ]);
 
 const darkSkies = new THREE.TextureLoader().load('../assets/dark-skies.jpg');
+
 
 var backgroundSphere = new THREE.Mesh(
     new THREE.BoxGeometry(800, 400, 400),

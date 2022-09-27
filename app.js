@@ -134,8 +134,8 @@ scene.add(sun);
 const controls = new OrbitControls(camera, renderer.domElement);
 renderer.render(scene, camera);
 
-controls.rotateSpeed = 0.9;
-controls.zoomSpeed = 0.9;
+controls.rotateSpeed = 1;
+controls.zoomSpeed = 1;
 
 controls.minDistance = 1;
 controls.maxDistance = 120;
